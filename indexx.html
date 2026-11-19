@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff4f8">
+<title>2nd Friendiversary With Lots Of Love</title>
+<style>
+  :root {
+    --bg: #fff7fa;
+    --bg-deep: #ffedf4;
+    --paper: rgba(255,255,255,.88);
+    --paper-solid: #fffdfd;
+    --ink: #55404a;
+    --muted: #8a707c;
+    --pink: #e99bb9;
+    --pink-dark: #c87598;
+    --pink-pale: #ffe4ee;
+    --border: #f1ccda;
+    --shadow: 0 12px 34px rgba(171, 105, 133, .12);
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: var(--sans);
+    background:
+      radial-gradient(ellipse at 8% 4%, rgba(255,190,213,.30), transparent 30%),
+      radial-gradient(ellipse at 93% 13%, rgba(255,219,231,.58), transparent 28%),
+      linear-gradient(180deg, var(--bg), var(--bg-deep));
+    overflow-x: hidden;
+  }
+  button { font: inherit; }
+  .page { width: min(1080px, calc(100% - 30px)); margin: 0 auto; padding: 22px 0 58px; }
+  .topline { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px; }
+  .tag {
+    display:inline-flex; align-items:center; gap:7px; padding:9px 14px;
+    border:1px solid var(--border); border-radius:999px; background:rgba(255,255,255,.76);
+    color:var(--muted); font-size:13px; box-shadow:var(--shadow);
+  }
+  .hero, .panel {
+    position:relative; background:var(--paper); border:1px solid var(--border);
+    box-shadow:var(--shadow); backdrop-filter: blur(8px);
+  }
+  .hero { border-radius:30px; padding:clamp(22px, 4vw, 38px); overflow:hidden; }
+  .hero::before, .hero::after { content:'♡'; position:absolute; color:rgba(232,153,184,.20); pointer-events:none; font-family:var(--serif); }
+  .hero::before { font-size:160px; right:5%; top:-45px; transform:rotate(15deg); }
+  .hero::after { content:'✧'; font-size:100px; left:3%; bottom:-36px; }
+  .hero-content { position:relative; z-index:1; }
+  .eyebrow { color:var(--pink-dark); font-weight:800; letter-spacing:.09em; text-transform:uppercase; font-size:12px; margin-bottom:13px; }
+  h1 { margin:0; font: 700 clamp(34px, 6vw, 62px)/1.06 var(--serif); letter-spacing:-.04em; }
+  h1 .heartline { color:var(--pink-dark); }
+  .intro { max-width:890px; margin:19px 0 0; color:var(--muted); font-size:clamp(15px, 1.8vw, 18px); line-height:1.95; white-space:normal; }
+  .intro strong { color:var(--ink); font-weight:800; }
+  .stats { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:11px; margin-top:25px; }
+  .stat { background:rgba(255,249,252,.94); border:1px dashed var(--border); border-radius:18px; padding:14px 15px; min-height:86px; }
+  .stat-label { color:var(--pink-dark); font-size:11px; text-transform:uppercase; letter-spacing:.12em; font-weight:900; }
+  .stat-value { margin-top:7px; font-size:17px; font-weight:800; }
+  .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:21px; }
+  .btn {
+    border:1px solid var(--border); border-radius:15px; padding:11px 15px; cursor:pointer;
+    color:var(--ink); background:#fff; box-shadow:0 5px 15px rgba(171,105,133,.08);
+    font-size:13px; font-weight:800; transition:transform .16s ease, background .16s ease;
+  }
+  .btn:hover { transform:translateY(-2px); background:#fff8fb; }
+  .btn:active { transform:translateY(0); }
+  .btn-primary { background:linear-gradient(135deg, #fff, #ffe0eb); }
+  .note { display:none; margin-top:17px; padding:19px 20px; border-radius:20px; background:#fffdfd; border:1px solid var(--border); color:var(--muted); line-height:1.9; white-space:pre-line; }
+  .note.show { display:block; animation:softIn .25s ease both; }
+  .note strong { color:var(--ink); }
+  .columns { display:grid; grid-template-columns:1.08fr .92fr; gap:16px; margin-top:17px; }
+  .panel { border-radius:24px; padding:22px; }
+  .panel h2 { font:700 27px/1.2 var(--serif); margin:0 0 7px; }
+  .panel-intro { color:var(--muted); margin:0; font-size:14px; line-height:1.7; }
+  .timeline { display:grid; gap:11px; margin-top:17px; }
+  .timeline-item { display:grid; grid-template-columns:82px minmax(0,1fr) auto; align-items:center; gap:10px; padding:13px; background:linear-gradient(135deg,#fff,#fff8fb); border:1px solid #f3d7e1; border-radius:17px; }
+  .timeline-date { color:var(--pink-dark); font-size:13px; font-weight:900; }
+  .timeline-desc { font-size:14px; line-height:1.55; }
+  .open-btn { border:1px solid var(--border); background:#fff; color:var(--pink-dark); border-radius:12px; padding:8px 12px; font-size:12px; font-weight:900; cursor:pointer; }
+  .open-btn:hover { background:var(--pink-pale); }
+  .memory-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; margin-top:17px; }
+  .memory-card { appearance:none; width:100%; text-align:left; cursor:pointer; color:inherit; min-height:145px; padding:16px; background:linear-gradient(145deg,#fff,#fff6fa); border:1px solid #f1d1dd; border-radius:18px; position:relative; overflow:hidden; transition:transform .16s ease, box-shadow .16s ease; }
+  .memory-card:hover { transform:translateY(-2px) rotate(-.2deg); box-shadow:0 10px 20px rgba(171,105,133,.10); }
+  .memory-card::after { content:'✧ ♡'; position:absolute; right:9px; top:8px; color:#edb2c8; font-size:17px; letter-spacing:3px; }
+  .memory-title { font-weight:900; font-size:15px; padding-right:42px; }
+  .memory-hint { color:var(--pink-dark); font-size:12px; font-weight:800; margin-top:13px; }
+  .memory-reveal { display:none; color:var(--muted); font-size:13px; line-height:1.75; margin-top:11px; white-space:pre-line; }
+  .memory-card.open .memory-reveal { display:block; animation:softIn .22s ease both; }
+  .memory-card.open .memory-hint { display:none; }
+  .ending { margin-top:18px; text-align:center; color:var(--muted); font:italic 14px var(--serif); }
+  .ending .tiny-hearts { color:var(--pink-dark); letter-spacing:5px; display:block; margin-bottom:7px; font-style:normal; }
+
+  /* Timeline pop-up card */
+  .modal-backdrop {
+    position:fixed; inset:0; z-index:50; display:none; align-items:center; justify-content:center;
+    padding:18px; background:rgba(87,58,72,.28); backdrop-filter:blur(7px);
+  }
+  .modal-backdrop.visible { display:flex; animation:fadeIn .18s ease both; }
+  .modal-card {
+    position:relative; width:min(510px, 100%); padding:31px 25px 24px; border-radius:27px;
+    background:linear-gradient(160deg,#fffefe,#fff2f7); border:1px solid #edc5d5;
+    box-shadow:0 25px 80px rgba(90,48,68,.24); text-align:center; overflow:hidden;
+    animation:popIn .25s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .modal-card::before { content:'✧  ˚  ♡  ˚  ✧'; display:block; color:#df9bb6; font-size:19px; letter-spacing:7px; margin-bottom:17px; }
+  .modal-card::after { content:'♡'; position:absolute; right:13px; bottom:-32px; color:rgba(232,153,184,.16); font:130px var(--serif); pointer-events:none; }
+  .modal-date { color:var(--pink-dark); font-weight:900; letter-spacing:.13em; font-size:11px; text-transform:uppercase; }
+  .modal-message { position:relative; z-index:1; margin:15px 0 20px; color:var(--ink); font: 20px/1.8 var(--serif); white-space:pre-line; }
+  .modal-decor { color:#db91ad; font-size:17px; letter-spacing:8px; margin-bottom:19px; }
+  .close-btn { position:relative; z-index:2; border:1px solid var(--border); border-radius:999px; padding:10px 19px; background:#fff; color:var(--pink-dark); font-size:13px; font-weight:900; cursor:pointer; }
+  .close-btn:hover { background:#ffe8f0; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes popIn { from{opacity:0; transform:translateY(10px) scale(.96)} to{opacity:1; transform:translateY(0) scale(1)} }
+  @keyframes softIn { from{opacity:0; transform:translateY(5px)} to{opacity:1; transform:translateY(0)} }
+  .spark { position:fixed; z-index:60; width:9px; height:9px; pointer-events:none; border-radius:50%; background:radial-gradient(circle,#fff 0 15%,#f0a8c2 48%,transparent 75%); animation:sparkle .9s ease-out forwards; }
+  @keyframes sparkle { to { transform:translate(var(--dx),var(--dy)) scale(1.6); opacity:0; } }
+  @media(max-width:820px) { .columns{grid-template-columns:1fr;} }
+  @media(max-width:620px) { .stats{grid-template-columns:repeat(2,minmax(0,1fr));} .timeline-item{grid-template-columns:1fr auto;} .timeline-date{grid-column:1/-1;} .memory-grid{grid-template-columns:1fr;} .panel{padding:18px;} }
+  @media(prefers-reduced-motion:reduce) { *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important;} }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topline">
+    <div class="tag" id="topLeft">SpidersWeb dc srvr!! it all started thereee hehe!</div>
+    <div class="tag" id="topRight">Friendiversary Web Page For Youuu Bby!!</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">✿ 2nd Friendiversary With Lots Of Love ✿</div>
+        <h1 id="mainTitle">Humi, My Beloved Girlfriend,<br><span class="heartline">This is from the tiny corner of my heart ♡</span></h1>
+        <p class="intro" id="introText">
+          ur <strong>beloved boyfriend</strong> is writing this himself soo read <strong>carefully</strong> hehe, we met- i saw u on <strong>16th nov</strong> on spiders web that day, im <strong>glad</strong> that happened, <strong>17th nov</strong> was the day we talked for the first time but it was more of a formal hi hello exchange T-T!! <strong>19th nov</strong> was the best day bcz we became <strong>officially friends</strong> and u accepted my friend req- who could've thought we'll come this far together, <strong>28th nov</strong>... shrm aa rhi h ahm- i was sure that day that ive developed a huge crush on u and i wanted u t-t!! i told this to my friends!! our friends!! <strong>10th dec</strong> was when i confessed although it was- different lmaooo!! yk it was my plan to spread that i like u so that you'll maybe consider it if we get shipped ahm... i told divyana abt it and she said she'd help hehe~ well here we are- u accepted on <strong>13th dec</strong> and that was one of my best days omg!! <strong>i have alooot of best days with uhh ♡♡♡</strong> how my whole life changed after meeting you.. im rly happy that i met you babe, after the patchup, we've improved alot and im really happy with u humi!! ur the most beautiful girl in the whole world and im sooo lucky to have u in <strong>my life</strong> as my girlfriend, i want us to be more than gf/bf-- well we'll get onto that later in txts hehe~ <strong>I Love You Babe ♡</strong>
+        </p>
+
+        <div class="stats" id="stats">
+          <div class="stat"><div class="stat-label">first saw u</div><div class="stat-value">16 Nov 2024</div></div>
+          <div class="stat"><div class="stat-label">first hi hello</div><div class="stat-value">17 Nov 2024</div></div>
+          <div class="stat"><div class="stat-label">officially friends</div><div class="stat-value">19 Nov 2024</div></div>
+          <div class="stat"><div class="stat-label">crush reveal (to myself)</div><div class="stat-value">28 Nov 2024</div></div>
+          <div class="stat"><div class="stat-label">the confession</div><div class="stat-value">10 Dec 2024</div></div>
+          <div class="stat"><div class="stat-label">my best yes</div><div class="stat-value">13 Dec 2024</div></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="noteToggle">open the little note ♡</button>
+          <button class="btn" id="sparkButton">make it sparkle ✧</button>
+          <button class="btn" id="jumpButton">our little timeline ↓</button>
+        </div>
+        <div class="note" id="littleNote">
+          <strong>little note:</strong><br>
+          im really really really glad that i found u that day!!! ik there were alot of ups and downs, weird days, soft days, annoying days and all of itt. but rn?? i like where we are and how we are ♡ i hope this keeps growing into smth rlyyyy kinder, lovelier and happier, i wish to spend my whole life with uhh cutie
+        </div>
+      </div>
+    </section>
+
+    <div class="columns" id="timelineSection">
+      <section class="panel">
+        <h2>timeline ♥</h2>
+        <p class="panel-intro">but not boring!!<br>tap the buttons, i kept the lines short bcz long paras are like a lecture hehe</p>
+        <div class="timeline" id="timelineList">
+          <article class="timeline-item"><div class="timeline-date">16 Nov 2024</div><div class="timeline-desc">the day i spotted you on SpidersWeb hehe!!</div><button class="open-btn" data-date="16 November 2024" data-message="and this is where it all began!! i saw u on the server and had absolutely no idea that this one little moment would turn into something this important to me ♡">open ♡</button></article>
+          <article class="timeline-item"><div class="timeline-date">17 Nov 2024</div><div class="timeline-desc">our first hi hello. very formal of us T-T</div><button class="open-btn" data-date="17 November 2024" data-message="our first ever conversation!! it was mostly a formal hi hello exchange but still, it was the first time we actually talked hehe. gotta start somewhere, right??">open ♡</button></article>
+          <article class="timeline-item"><div class="timeline-date">19 Nov 2024</div><div class="timeline-desc">the day we officially became friends!!</div><button class="open-btn" data-date="19 November 2024" data-message="YOU ACCEPTED MY FRIEND REQUEST!! and just like that, we officially became friends. who would've thought we'd come this far together?? definitely not me T-T ♡">open ♡</button></article>
+          <article class="timeline-item"><div class="timeline-date">28 Nov 2024</div><div class="timeline-desc">the crush era. shrm aa rhi h ahm-</div><button class="open-btn" data-date="28 November 2024" data-message="this was the day i realised i had developed a HUGE crush on you. i wanted u t-t!! and i even told our friends!! looking back at it now is making me shy all over again help- ♡">open ♡</button></article>
+          <article class="timeline-item"><div class="timeline-date">10 Dec 2024</div><div class="timeline-desc">the confession plan. divyana knows the lore hehe</div><button class="open-btn" data-date="10 December 2024" data-message="THE CONFESSIONNN. and the story behind it is so funny lmaooo. i was trying to spread that i liked you so maybe you'd consider it if we got shipped. divyana said she'd help too hehe. my plan was something else entirely T-T ♡">open ♡</button></article>
+          <article class="timeline-item"><div class="timeline-date">13 Dec 2024</div><div class="timeline-desc">you said yes. one of my best days ever!!</div><button class="open-btn" data-date="13 December 2024" data-message="AND YOU ACCEPTEDDD!! this genuinely became one of my best days ever. i have alooot of best days with uhh, but this one will always have its own special place ♡♡♡">open ♡</button></article>
+          <article class="timeline-item"><div class="timeline-date">right now ♡</div><div class="timeline-desc">after everything, we're doing really really good.</div><button class="open-btn" data-date="Right now" data-message="we've had our ups and downs, but after the patchup we've improved alot and things are extremely good rn. i'm really happy with you, humi. let's keep making more of those best days together, okay?? ♡">open ♡</button></article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>little cards for uuu ♡</h2>
+        <p class="panel-intro">tap each one hehe. some things deserve their own tiny card.</p>
+        <div class="memory-grid" id="memoryGrid">
+          <button class="memory-card" type="button"><div class="memory-title">how it all started ✿</div><div class="memory-hint">tap to open ♡</div><div class="memory-reveal">one server, one friend request, a few hi hellos and then suddenly you became such a huge part of my life. funny how the smallest beginnings turn into the biggest chapters, no??</div></button>
+          <button class="memory-card" type="button"><div class="memory-title">the crush chapter 💗</div><div class="memory-hint">tap to open ♡</div><div class="memory-reveal">28th nov... i was SO sure i liked you. i even told our friends about it hehe. and now you're my girlfriend. still a little unbelievable in the best way T-T</div></button>
+          <button class="memory-card" type="button"><div class="memory-title">our many best days ✨</div><div class="memory-hint">tap to open ♡</div><div class="memory-reveal">13th dec was one of them, but definitely not the only one!! there are sooo many happy moments and memories with you, and i want us to keep collecting thousands more.</div></button>
+          <button class="memory-card" type="button"><div class="memory-title">the patchup chapter 🌷</div><div class="memory-hint">tap to open ♡</div><div class="memory-reveal">we've been through alot, but look at us now!! we've improved so much and i'm genuinely really happy with how things are. i love this version of us, and i hope we keep growing together.</div></button>
+          <button class="memory-card" type="button"><div class="memory-title">a tiny wish for us ♡</div><div class="memory-hint">tap to open ♡</div><div class="memory-reveal">i hope we remember this day every year, stay together hmesha, and keep finding reasons to celebrate us. i want you to be a permanent person in my life, cutie.</div></button>
+          <button class="memory-card" type="button"><div class="memory-title">one last thing-</div><div class="memory-hint">tap to open ♡</div><div class="memory-reveal">ur the most beautiful girl in the whole world and i'm sooo lucky to have u as my girlfriend. i love you babe. more than this little website can fit hehe ♡♡♡</div></button>
+        </div>
+      </section>
+    </div>
+    <footer class="ending"><span class="tiny-hearts">♡ ✧ ♡ ✧ ♡</span>made for you, with lots and lots of love hehe</footer>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="messageModal" role="dialog" aria-modal="true" aria-labelledby="modalDate" aria-describedby="modalMessage">
+  <div class="modal-card">
+    <div class="modal-date" id="modalDate">a little memory</div>
+    <div class="modal-message" id="modalMessage"></div>
+    <div class="modal-decor">♡ ✧ ˚ ୨୧ ˚ ✧ ♡</div>
+    <button class="close-btn" id="closeModal">close this lil card ♡</button>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('messageModal');
+  const modalDate = document.getElementById('modalDate');
+  const modalMessage = document.getElementById('modalMessage');
+  const closeModalButton = document.getElementById('closeModal');
+  let previousFocus = null;
+
+  function openMemoryCard(date, message, opener) {
+    previousFocus = opener || document.activeElement;
+    modalDate.textContent = date;
+    modalMessage.textContent = message;
+    modal.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+    closeModalButton.focus();
+  }
+  function closeMemoryCard() {
+    modal.classList.remove('visible');
+    document.body.style.overflow = '';
+    if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
+  }
+  document.querySelectorAll('.open-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      openMemoryCard(button.dataset.date, button.dataset.message, button);
+    });
+  });
+  closeModalButton.addEventListener('click', closeMemoryCard);
+  modal.addEventListener('click', event => {
+    if (event.target === modal) closeMemoryCard();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal.classList.contains('visible')) closeMemoryCard();
+  });
+
+  document.querySelectorAll('.memory-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('open'));
+  });
+
+  const noteToggle = document.getElementById('noteToggle');
+  const littleNote = document.getElementById('littleNote');
+  noteToggle.addEventListener('click', () => {
+    littleNote.classList.toggle('show');
+    noteToggle.textContent = littleNote.classList.contains('show') ? 'hide the little note ♡' : 'open the little note ♡';
+  });
+  document.getElementById('jumpButton').addEventListener('click', () => {
+    document.getElementById('timelineSection').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  function sparkleAt(x, y) {
+    for (let i=0; i<18; i++) {
+      const dot = document.createElement('span');
+      const angle = Math.PI * 2 * i / 18;
+      const distance = 35 + Math.random() * 65;
+      dot.className = 'spark';
+      dot.style.left = x + 'px'; dot.style.top = y + 'px';
+      dot.style.setProperty('--dx', Math.cos(angle) * distance + 'px');
+      dot.style.setProperty('--dy', Math.sin(angle) * distance - 55 + 'px');
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 950);
+    }
+  }
+  document.getElementById('sparkButton').addEventListener('click', event => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    sparkleAt(rect.left + rect.width/2, rect.top + rect.height/2);
+  });
+  document.querySelectorAll('.open-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const rect = button.getBoundingClientRect();
+      sparkleAt(rect.left + rect.width/2, rect.top + rect.height/2);
+    });
+  });
+</script>
+</body>
+</html>
